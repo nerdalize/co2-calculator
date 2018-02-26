@@ -6,6 +6,7 @@ This Docker image calculates the amount of CO2 saved per year by Nerdalize. By t
 1. Total CO2 savings in kilograms and how many traveling kilometers this corresponds to for different ways of transportation. This is both written to stdout and plotted in a bar chart.
 2. If a file `flights.csv` is present, a bar chart showing how many airplane trips you could make, based on the different trips specified in the file.
 
+
 ## Usage
 Executing just the python file:
 ```
