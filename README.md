@@ -8,10 +8,16 @@ This Docker image calculates the amount of CO2 saved per year by Nerdalize. By t
 
 ## Usage
 Executing just the python file:
-```python co2_calc.py [no-of-households] [output-folder] [input-folder]```
+```
+python co2_calc.py [no-of-households] [output-folder] [input-folder]
+```
 
 Executing as a Docker container:
-```docker run -v "$PWD":/input -v "$PWD":/output nerdalize/co2-calculator [no-of-households]```
+```
+docker run -v "$PWD":/input -v "$PWD":/output nerdalize/co2-calculator [no-of-households]
+```
 
 Or simply execute the following if you're not interested in output files:
-```docker run nerdalize/co2-calculator [no-of-households]```
+```
+docker run nerdalize/co2-calculator [no-of-households]
+```
