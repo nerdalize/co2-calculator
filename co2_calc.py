@@ -55,4 +55,5 @@ if os.path.isfile(input_file):
         sys.exit(1)
     except:
         print("Unexpected error:", sys.exc_info()[0])
+        print("Is your input file in the right format?")
         sys.exit(2)
