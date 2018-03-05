@@ -1,3 +1,5 @@
+import os
+import errno
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -17,3 +19,12 @@ def plot(x, y, x_label, y_label, title, filename):
     plt.ylabel(y_label)
     plt.title(title)
     plt.savefig(filename, bbox_inches='tight')
+
+# Make a directory and don't raise an exeception if it already exists
+def mkdir(dirname):
+    try:
+        os.mkdir(dirname)
+    except OSError as exc:
+        if exc.errno != errno.EEXIST:
+            raise
+        pass

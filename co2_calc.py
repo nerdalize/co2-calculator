@@ -2,7 +2,7 @@ import sys
 import os.path
 import numpy as np
 from transport import Transport
-from plot import plot
+import utils
 
 households = 5 if len(sys.argv) < 2 else int(sys.argv[1])
 output_folder = '/output' if len(sys.argv) < 3 else sys.argv[2]
@@ -23,28 +23,31 @@ print(tmpl.format("🚗", transport.car(), "car", km_to_world(transport.car())))
 print(tmpl.format("🚆", transport.train(), "train", km_to_world(transport.train())))
 print(tmpl.format("✈️ ", transport.airplane(), "airplane", km_to_world(transport.airplane())))
 
-if os.path.isdir(output_folder):
-	# 2. Plot trips per type of transport in a bar chart.
-	x = ['Car', 'Train', 'Airplane']
-	y = [km_to_world(transport.car()), km_to_world(transport.train()), km_to_world(transport.airplane())]
-	plot(x, y,
-	    'Type of transportation',
-	    'Times around the world',
-	    'Equivalent in CO2 emissions, for {} households.'.format(households),
-	    output_folder + '/trips.png'
-	)
-	
-	# 3. Read input file and plot amount of trips that could be made for amount of households.
-	input_file = input_folder + "/flights.csv"
-	if os.path.isfile(input_file):
-	    x = []
-	    y = []
-	    flights = np.genfromtxt(input_file, delimiter=';', names=True, dtype=None, encoding='utf-8')
-	    for flight in flights:
-	        x.append(flight['flight'])
-	        y.append(transport.airplane() / float(flight['distance']))
-	    plot(x, y,
-	        'Flights',
-	        'Number of trips',
-	        'The amount of trips you can make by ✈️ per year, for {} households.'.format(households),
-	        output_folder + '/flights.png')
+# 2. Read input file and plot amount of trips that could be made for amount of households.
+input_file = input_folder + "/flights.csv"
+if os.path.isfile(input_file):
+    try:
+        utils.mkdir(output_folder)
+        output_file = output_folder + '/flights.png'
+
+        x = []
+        y = []
+        flights = np.genfromtxt(input_file, delimiter=';', names=True, dtype=None, encoding='utf-8')
+        for flight in flights:
+            x.append(flight['flight'])
+            y.append(transport.airplane() / float(flight['distance']))
+
+        utils.plot(x, y,
+            'Flights',
+            'Number of trips',
+            'The amount of trips you can make by ✈️ per year, for {} households.'.format(households),
+            output_file)
+
+        print("\n>> Created flights plot {}".format(output_file))
+    except OSError as e:
+        _, strerror = e.args
+        print("Failed to create output folder {}: {}".format(output_folder, strerror))
+        sys.exit(1)
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        sys.exit(2)
