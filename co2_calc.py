@@ -37,7 +37,7 @@ if os.path.isfile(input_file):
         utils.mkdir(args.output)
         x = []
         y = []
-        flights = np.genfromtxt(input_file, delimiter=';', names=True, dtype=None, encoding='utf-8')
+        flights = np.genfromtxt(input_file, delimiter=',', names=True, dtype=None, encoding='utf-8')
         for flight in flights:
             x.append(flight['flight'])
             y.append(transport.airplane() / float(flight['distance']))
