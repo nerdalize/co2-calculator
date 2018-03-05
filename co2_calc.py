@@ -22,10 +22,10 @@ transport = Transport(co2_kg)
 print("For {} households, Nerdalize reduces CO2 emissions by {:,d} kg per year.".format(args.households, co2_kg))
 print("")
 print("This is equivalent to (per person):")
-tmpl = "{} {:,.0f} Kilometers by {}, or {:.1f} times around the world 🌍"
-print(tmpl.format("🚗", transport.car(), "car", km_to_world(transport.car())))
-print(tmpl.format("🚆", transport.train(), "train", km_to_world(transport.train())))
-print(tmpl.format("✈️ ", transport.airplane(), "airplane", km_to_world(transport.airplane())))
+tmpl = "- {:,.0f} Kilometers by {}, or {:.1f} times around the world! {}"
+print(tmpl.format(transport.car(), "car", km_to_world(transport.car()), "🚗"))
+print(tmpl.format(transport.train(), "train", km_to_world(transport.train()), "🚆"))
+print(tmpl.format(transport.airplane(), "airplane", km_to_world(transport.airplane()), "✈️ "))
 
 # define input and output files
 input_file = args.input + "/flights.csv"
